@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # Needed to push back to the repository
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -25,8 +27,13 @@ jobs:
       - name: Run Scraper
         run: python steam_scraper.py
 
-      - name: Save Output Artifacts
-        uses: actions/upload-artifact@v4  # Updated to v4
-        with:
-          name: steam_market_data
-          path: ./data
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Commit and Push JSON files
+        run: |
+          git add ./data/*.json
+          git commit -m "Add new scraped data files"
+          git push
