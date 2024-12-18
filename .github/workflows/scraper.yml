@@ -2,7 +2,7 @@ name: Steam Scraper Automation
 
 on:
   schedule:
-    - cron: "0 0,12 * * *"  # Runs at 12:00 AM and 12:00 PM
+    - cron: "0 0,12 * * *"  # Runs twice a day
   workflow_dispatch:  # Allow manual runs if needed
 
 jobs:
@@ -11,22 +11,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: |
-          pip install requests
+        run: pip install requests
 
       - name: Run Scraper
         run: python steam_scraper.py
 
       - name: Save Output Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: steam_market_data
           path: ./data
