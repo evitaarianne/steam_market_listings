@@ -5,6 +5,9 @@ on:
     - cron: "0 0,12 * * *"  # Runs twice a day
   workflow_dispatch:  # Allow manual runs if needed
 
+permissions:
+  contents: write  # Grant write access to the repository
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
