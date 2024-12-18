@@ -1,0 +1,32 @@
+name: Steam Scraper Automation
+
+on:
+  schedule:
+    - cron: "0 0,12 * * *"  # Runs at 12:00 AM and 12:00 PM
+  workflow_dispatch:  # Allow manual runs if needed
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run Scraper
+        run: python steam_scraper.py
+
+      - name: Save Output Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: steam_market_data
+          path: ./data
