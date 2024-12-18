@@ -3,7 +3,6 @@ import json
 import datetime
 import os
 
-# List of endpoints with names and URLs
 URLS = [
     {"name": "Ren", "url": "https://steamcommunity.com/market/listings/3188910/Ren/render?currency=1"},
     {"name": "Aoshi", "url": "https://steamcommunity.com/market/listings/3188910/Aoshi/render?currency=1"},
@@ -13,7 +12,6 @@ URLS = [
     {"name": "Shizuku", "url": "https://steamcommunity.com/market/listings/3188910/Shizuku/render?currency=1"},
 ]
 
-# Headers and Cookies for Steam Requests
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/116.0.0.0 Safari/537.36",
     "Referer": "https://steamcommunity.com/market/",
@@ -27,11 +25,9 @@ COOKIES = {
     "steamCountry": "PH%7C445351b22ded0c8d5da3ef8e60a3c10c",
 }
 
-# Output directory for saved JSON files
 OUTPUT_DIR = "./data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Scrape data and save to JSON
 def scrape_and_save():
     for endpoint in URLS:
         try:
