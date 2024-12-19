@@ -10,7 +10,7 @@ URLS = [
     "https://steamcommunity.com/market/listings/3188910/Jeanne/render?currency=1",
     "https://steamcommunity.com/market/listings/3188910/Minnie/render?currency=1",
     "https://steamcommunity.com/market/listings/3188910/Celia/render?currency=1",
-    "https://steamcommunity.com/market/listings/3188910/Shizuku/render?currency=1"
+    "https://steamcommunity.com/market/listings/3188910/Shizuku/render?currency=1",
 ]
 
 HEADERS = {
@@ -39,8 +39,11 @@ def clean_old_files(directory, hours=3):
             file_mtime = os.path.getmtime(file_path)
             print(f"Checking file: {filename}, last modified: {datetime.datetime.fromtimestamp(file_mtime)}")
             if file_mtime < cutoff:
-                os.remove(file_path)
-                print(f"Deleted old file: {file_path}")
+                try:
+                    os.remove(file_path)
+                    print(f"Deleted old file: {file_path}")
+                except Exception as e:
+                    print(f"Failed to delete file: {file_path}. Error: {e}")
 
 def scrape_and_save():
     for url in URLS:
@@ -61,4 +64,4 @@ def scrape_and_save():
 
 if __name__ == "__main__":
     clean_old_files(OUTPUT_DIR, hours=0.0167)  # ~1 minute
-    scrape_and_save() 
+    scrape_and_save()
