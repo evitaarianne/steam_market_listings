@@ -30,28 +30,25 @@ OUTPUT_DIR = "./data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def clean_old_files(directory, hours=3):
-    now = time.time()  # Current time in seconds since epoch
-    cutoff = now - (hours * 3600)  # Threshold time in seconds
+    now = datetime.datetime.now()
+    cutoff = now - datetime.timedelta(hours=hours)
 
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
+        
+        try:
+            if filename.startswith("steam_market_") and filename.endswith(".json"):
+                timestamp_str = filename.split("_")[-1].replace(".json", "") 
+                file_time = datetime.datetime.strptime(timestamp_str, "%Y%m%d%H%M%S")
 
-        # Check if it's a file and not a directory
-        if os.path.isfile(file_path):
-            try:
-                file_mtime = os.path.getmtime(file_path)  # Get last modification time of the file
-                readable_mtime = datetime.datetime.fromtimestamp(file_mtime)  # Convert to readable format
-                print(f"Checking file: {filename}, last modified: {readable_mtime}")
-
-                # Compare the file's last modified time with the cutoff
-                if file_mtime < cutoff:
+                print(f"Checking file: {filename}, timestamp: {file_time}")
+                if file_time < cutoff:
                     os.remove(file_path)
                     print(f"Deleted old file: {file_path}")
                 else:
                     print(f"File {filename} is not old enough to be deleted.")
-
-            except Exception as e:
-                print(f"Error processing file {file_path}: {e}")
+        except Exception as e:
+            print(f"Error processing file {filename}: {e}")
 
 def scrape_and_save():
     for url in URLS:
@@ -60,7 +57,7 @@ def scrape_and_save():
             if response.status_code == 200:
                 data = response.json()
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                market_hash_name = url.split("/")[-2]  # Extract character name from URL
+                market_hash_name = url.split("/")[-2]  
                 filename = f"{OUTPUT_DIR}/steam_market_{market_hash_name}_{timestamp}.json"
                 with open(filename, "w") as file:
                     json.dump(data, file, indent=4)
