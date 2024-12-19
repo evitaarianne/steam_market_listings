@@ -29,27 +29,6 @@ COOKIES = {
 OUTPUT_DIR = "./data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-def clean_old_files(directory, hours=3):
-    now = datetime.datetime.now()
-    cutoff = now - datetime.timedelta(hours=hours)
-
-    for filename in os.listdir(directory):
-        file_path = os.path.join(directory, filename)
-        
-        try:
-            if filename.startswith("steam_market_") and filename.endswith(".json"):
-                timestamp_str = filename.split("_")[-1].replace(".json", "") 
-                file_time = datetime.datetime.strptime(timestamp_str, "%Y%m%d%H%M%S")
-
-                print(f"Checking file: {filename}, timestamp: {file_time}")
-                if file_time < cutoff:
-                    os.remove(file_path)
-                    print(f"Deleted old file: {file_path}")
-                else:
-                    print(f"File {filename} is not old enough to be deleted.")
-        except Exception as e:
-            print(f"Error processing file {filename}: {e}")
-
 def scrape_and_save():
     for url in URLS:
         try:
@@ -68,5 +47,4 @@ def scrape_and_save():
             print(f"An error occurred while fetching data from {url}: {e}")
 
 if __name__ == "__main__":
-    clean_old_files(OUTPUT_DIR, hours=0.0167)  # ~1 minute
     scrape_and_save()
