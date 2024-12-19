@@ -31,12 +31,13 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def clean_old_files(directory, hours=3):
     now = time.time()
-    cutoff = now - (hours * 3600)  # 3600 seconds in an hour
+    cutoff = now - (hours * 3600)  # Convert hours to seconds
 
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         if os.path.isfile(file_path):
             file_mtime = os.path.getmtime(file_path)
+            print(f"Checking file: {filename}, last modified: {datetime.datetime.fromtimestamp(file_mtime)}")
             if file_mtime < cutoff:
                 os.remove(file_path)
                 print(f"Deleted old file: {file_path}")
