@@ -35,11 +35,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions@github.com"
 
-      - name: Commit and Push JSON files
+      - name: Commit and Push Changes
         run: |
-          git add ./data/*.json
-          git commit -m "Add new scraped data files"
+          git add ./data/*
+          git commit -m "Delete old files and add new scraped data"
           git push
-
-      - name: List files in data directory
-        run: ls -l ./data
