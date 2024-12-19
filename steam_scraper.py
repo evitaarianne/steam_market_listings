@@ -2,14 +2,15 @@ import requests
 import json
 import datetime
 import os
+import time
 
 URLS = [
-    {"name": "Ren", "url": "https://steamcommunity.com/market/listings/3188910/Ren/render?currency=1"},
-    {"name": "Aoshi", "url": "https://steamcommunity.com/market/listings/3188910/Aoshi/render?currency=1"},
-    {"name": "Jeanne", "url": "https://steamcommunity.com/market/listings/3188910/Jeanne/render?currency=1"},
-    {"name": "Minnie", "url": "https://steamcommunity.com/market/listings/3188910/Minnie/render?currency=1"},
-    {"name": "Celia", "url": "https://steamcommunity.com/market/listings/3188910/Celia/render?currency=1"},
-    {"name": "Shizuku", "url": "https://steamcommunity.com/market/listings/3188910/Shizuku/render?currency=1"},
+    "https://steamcommunity.com/market/listings/3188910/Ren/render?currency=1",
+    "https://steamcommunity.com/market/listings/3188910/Aoshi/render?currency=1",
+    "https://steamcommunity.com/market/listings/3188910/Jeanne/render?currency=1",
+    "https://steamcommunity.com/market/listings/3188910/Minnie/render?currency=1",
+    "https://steamcommunity.com/market/listings/3188910/Celia/render?currency=1",
+    "https://steamcommunity.com/market/listings/3188910/Shizuku/render?currency=1"
 ]
 
 HEADERS = {
@@ -28,22 +29,35 @@ COOKIES = {
 OUTPUT_DIR = "./data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+def clean_old_files(directory, hours=3):
+    now = time.time()
+    cutoff = now - (hours * 3600)  # 3600 seconds in an hour
+
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        if os.path.isfile(file_path):
+            file_mtime = os.path.getmtime(file_path)
+            if file_mtime < cutoff:
+                os.remove(file_path)
+                print(f"Deleted old file: {file_path}")
+
 def scrape_and_save():
-    for endpoint in URLS:
+    for url in URLS:
         try:
-            print(f"Fetching data for: {endpoint['name']}")
-            response = requests.get(endpoint['url'], headers=HEADERS, cookies=COOKIES)
+            response = requests.get(url, headers=HEADERS, cookies=COOKIES)
             if response.status_code == 200:
                 data = response.json()
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                filename = f"{OUTPUT_DIR}/steam_market_{endpoint['name']}_{timestamp}.json"
+                market_hash_name = url.split("/")[-2]  # Extract character name from URL
+                filename = f"{OUTPUT_DIR}/steam_market_{market_hash_name}_{timestamp}.json"
                 with open(filename, "w") as file:
                     json.dump(data, file, indent=4)
                 print(f"Data saved to {filename}")
             else:
-                print(f"Error {response.status_code} for {endpoint['name']}: Failed to fetch data")
+                print(f"Error {response.status_code}: Failed to fetch data from {url}")
         except Exception as e:
-            print(f"An error occurred for {endpoint['name']}: {e}")
+            print(f"An error occurred while fetching data from {url}: {e}")
 
 if __name__ == "__main__":
-    scrape_and_save()
+    clean_old_files(OUTPUT_DIR, hours=3)  
+    scrape_and_save() 
