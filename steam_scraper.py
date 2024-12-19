@@ -59,5 +59,5 @@ def scrape_and_save():
             print(f"An error occurred while fetching data from {url}: {e}")
 
 if __name__ == "__main__":
-    clean_old_files(OUTPUT_DIR, hours=3)  
+    clean_old_files(OUTPUT_DIR, hours=0.0167)  # ~1 minute
     scrape_and_save() 
