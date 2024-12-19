@@ -30,20 +30,28 @@ OUTPUT_DIR = "./data"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def clean_old_files(directory, hours=3):
-    now = time.time()
-    cutoff = now - (hours * 3600)  # Convert hours to seconds
+    now = time.time()  # Current time in seconds since epoch
+    cutoff = now - (hours * 3600)  # Threshold time in seconds
 
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
+
+        # Check if it's a file and not a directory
         if os.path.isfile(file_path):
-            file_mtime = os.path.getmtime(file_path)
-            print(f"Checking file: {filename}, last modified: {datetime.datetime.fromtimestamp(file_mtime)}")
-            if file_mtime < cutoff:
-                try:
+            try:
+                file_mtime = os.path.getmtime(file_path)  # Get last modification time of the file
+                readable_mtime = datetime.datetime.fromtimestamp(file_mtime)  # Convert to readable format
+                print(f"Checking file: {filename}, last modified: {readable_mtime}")
+
+                # Compare the file's last modified time with the cutoff
+                if file_mtime < cutoff:
                     os.remove(file_path)
                     print(f"Deleted old file: {file_path}")
-                except Exception as e:
-                    print(f"Failed to delete file: {file_path}. Error: {e}")
+                else:
+                    print(f"File {filename} is not old enough to be deleted.")
+
+            except Exception as e:
+                print(f"Error processing file {file_path}: {e}")
 
 def scrape_and_save():
     for url in URLS:
