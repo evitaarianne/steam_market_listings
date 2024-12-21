@@ -1,0 +1,73 @@
+{
+    "success": true,
+    "start": 0,
+    "pagesize": 10,
+    "total_count": 0,
+    "results_html": "<div class=\"market_listing_table_header\">\n\t<div class=\"market_listing_price_listings_block\">\n\t\t<span class=\"market_listing_right_cell market_listing_action_buttons\"></span>\n\t\t<span class=\"market_listing_right_cell market_listing_their_price\">PRICE</span>\n\t</div>\n\t<div><span class=\"market_listing_header_namespacer\"></span>NAME</div>\n</div>\n\n<div class=\"market_listing_row market_recent_listing_row listing_642422368833164109\" id=\"listing_642422368833164109\">\n\t\n\t<div class=\"market_listing_item_img_container\">\t\t<img id=\"listing_642422368833164109_image\" src=\"https://community.fastly.steamstatic.com/economy/image/257LD49uL5mYNLW2Z21igzqE-dtHXd3mmIiXjwNdG3zu66FjfIcQ_wR42VehQBBhVntyhlamHSlGZrmAJ-cOsKnoBQMEE5aMbk5at6ykeDlPSYhz-HW17NViaVSoGlrrOx0F9eD6IG87GPIaYVWxHKERCKD2_ltznCgu7HbfabNuGsHVS4N0o-Dmzmcpw4EGV4Ibwq9Tr9aQe3T7g2z7VsedPP24NLEKqfCOaEcIX3hG0sVwZzBD_gF6Uu1g4saRd9_bLuhj55L6tZ7t3c8YOAm4K4ApDl-b7JdVbEcIZASmWDt4lQJWjgV2Zu8-kN_RLe6WZUSaFT9Ej-rOrji2-L12fL188DmBoYohe2igf-xw7TFs-Ev6CZKyYEIXDU7sCWIptHMQN9xDUutqOd6NQnMhBDvURQ/62fx62f\" srcset=\"https://community.fastly.steamstatic.com/economy/image/257LD49uL5mYNLW2Z21igzqE-dtHXd3mmIiXjwNdG3zu66FjfIcQ_wR42VehQBBhVntyhlamHSlGZrmAJ-cOsKnoBQMEE5aMbk5at6ykeDlPSYhz-HW17NViaVSoGlrrOx0F9eD6IG87GPIaYVWxHKERCKD2_ltznCgu7HbfabNuGsHVS4N0o-Dmzmcpw4EGV4Ibwq9Tr9aQe3T7g2z7VsedPP24NLEKqfCOaEcIX3hG0sVwZzBD_gF6Uu1g4saRd9_bLuhj55L6tZ7t3c8YOAm4K4ApDl-b7JdVbEcIZASmWDt4lQJWjgV2Zu8-kN_RLe6WZUSaFT9Ej-rOrji2-L12fL188DmBoYohe2igf-xw7TFs-Ev6CZKyYEIXDU7sCWIptHMQN9xDUutqOd6NQnMhBDvURQ/62fx62f 1x, https://community.fastly.steamstatic.com/economy/image/257LD49uL5mYNLW2Z21igzqE-dtHXd3mmIiXjwNdG3zu66FjfIcQ_wR42VehQBBhVntyhlamHSlGZrmAJ-cOsKnoBQMEE5aMbk5at6ykeDlPSYhz-HW17NViaVSoGlrrOx0F9eD6IG87GPIaYVWxHKERCKD2_ltznCgu7HbfabNuGsHVS4N0o-Dmzmcpw4EGV4Ibwq9Tr9aQe3T7g2z7VsedPP24NLEKqfCOaEcIX3hG0sVwZzBD_gF6Uu1g4saRd9_bLuhj55L6tZ7t3c8YOAm4K4ApDl-b7JdVbEcIZASmWDt4lQJWjgV2Zu8-kN_RLe6WZUSaFT9Ej-rOrji2-L12fL188DmBoYohe2igf-xw7TFs-Ev6CZKyYEIXDU7sCWIptHMQN9xDUutqOd6NQnMhBDvURQ/62fx62fdpx2x 2x\" style=\"border-color: #ffac64;\" class=\"market_listing_item_img\" alt=\"\" />\t</div>\n\t\t<div class=\"market_listing_price_listings_block\">\n\t\t\t\t\t<div class=\"market_listing_right_cell market_listing_action_buttons\">\n\t\t\t\t\t\t\t\t\t<div class=\"market_listing_buy_button\">\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t<div class=\"market_listing_right_cell market_listing_their_price\">\n\t\t\t<span class=\"market_table_value\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"market_listing_price market_listing_price_with_fee\">\n\t\t\t\t\t\tSold!\t\t\t\t\t</span>\n\t\t\t\t\t<span class=\"market_listing_price market_listing_price_with_publisher_fee_only\">\n\t\t\t\t\t\tSold!\t\t\t\t\t</span>\n\t\t\t\t\t<span class=\"market_listing_price market_listing_price_without_fee\">\n\t\t\t\t\t\tSold!\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<br/>\n\t\t\t\t\t\t\t</span>\n\t\t</div>\n\t\t<div class=\"market_listing_right_cell\">\n\t\t\t\t\t</div>\n\t</div>\n\n\t\t<div class=\"market_listing_item_name_block\" >\n\t\t<span class=\"market_listing_item_name\" id=\"listing_642422368833164109_name\" style=\"color: #ffac64;\">Shizuku</span>\n\t\t<br/>\n\t\t\t\t<div class=\"market_listing_row_details\" id=\"listing_642422368833164109_details\">\n\t\t\t\t</div>\n\t</div>\n\t<div style=\"clear: both;\"></div>\n</div>\n",
+    "listinginfo": {
+        "642422368833164109": {
+            "listingid": "642422368833164109",
+            "price": 0,
+            "fee": 0,
+            "publisher_fee_app": 3188910,
+            "publisher_fee_percent": "0.100000001490116119",
+            "currencyid": 2001,
+            "asset": {
+                "currency": 0,
+                "appid": 3188910,
+                "contextid": "2",
+                "id": "628911569918880737",
+                "amount": "0"
+            }
+        }
+    },
+    "assets": {
+        "3188910": {
+            "2": {
+                "628911569918880737": {
+                    "currency": 0,
+                    "appid": 3188910,
+                    "contextid": "2",
+                    "id": "628911569918880737",
+                    "classid": "6147973190",
+                    "instanceid": "0",
+                    "amount": "0",
+                    "status": 4,
+                    "original_amount": "1",
+                    "unowned_id": "628911569918886267",
+                    "unowned_contextid": "2",
+                    "background_color": "",
+                    "icon_url": "257LD49uL5mYNLW2Z21igzqE-dtHXd3mmIiXjwNdG3zu66FjfIcQ_wR42VehQBBhVntyhlamHSlGZrmAJ-cOsKnoBQMEE5aMbk5at6ykeDlPSYhz-HW17NViaVSoGlrrOx0F9eD6IG87GPIaYVWxHKERCKD2_ltznCgu7HbfabNuGsHVS4N0o-Dmzmcpw4EGV4Ibwq9Tr9aQe3T7g2z7VsedPP24NLEKqfCOaEcIX3hG0sVwZzBD_gF6Uu1g4saRd9_bLuhj55L6tZ7t3c8YOAm4K4ApDl-b7JdVbEcIZASmWDt4lQJWjgV2Zu8-kN_RLe6WZUSaFT9Ej-rOrji2-L12fL188DmBoYohe2igf-xw7TFs-Ev6CZKyYEIXDU7sCWIptHMQN9xDUutqOd6NQnMhBDvURQ",
+                    "descriptions": [
+                        {
+                            "type": "html",
+                            "value": "<b>Rarity: <span style=\"color: #ffac64\">Epic</span></b> \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f<br><br><i>\u201cWould you like to play a game, darling?\u201d</i><br><br><a class=\"bb_link\" href=\"https://store.steampowered.com/app/3188910/Waifu\" target=\"_blank\" rel=\"\" ><u>Download Waifu now for instant eternal love.</u></a>"
+                        }
+                    ],
+                    "tradable": 1,
+                    "name": "Shizuku",
+                    "name_color": "ffac64",
+                    "type": "",
+                    "market_name": "Shizuku",
+                    "market_hash_name": "Shizuku",
+                    "commodity": 1,
+                    "market_tradable_restriction": 7,
+                    "market_marketable_restriction": 7,
+                    "marketable": 1,
+                    "app_icon": "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/3188910/0a43a42ed28e9b346f8d61eb125f8222de9122cd.jpg",
+                    "owner": 0
+                }
+            }
+        }
+    },
+    "currency": [],
+    "hovers": "\t\tCreateItemHoverFromContainer( g_rgAssets, 'listing_642422368833164109_name', 3188910, '2', '628911569918880737', 0 );\n\t\tCreateItemHoverFromContainer( g_rgAssets, 'listing_642422368833164109_details', 3188910, '2', '628911569918880737', 0 );\n\t\tCreateItemHoverFromContainer( g_rgAssets, 'listing_642422368833164109_image', 3188910, '2', '628911569918880737', 0 );\n\t",
+    "app_data": {
+        "3188910": {
+            "appid": 3188910,
+            "name": "Waifu",
+            "icon": "https://cdn.fastly.steamstatic.com/steamcommunity/public/images/apps/3188910/0a43a42ed28e9b346f8d61eb125f8222de9122cd.jpg",
+            "link": "https://steamcommunity.com/app/3188910"
+        }
+    }
+}
