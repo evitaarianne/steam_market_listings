@@ -28,7 +28,9 @@ jobs:
           pip install requests
 
       - name: Run Scraper
-        run: python steam_scraper.py
+        run: |
+          python steam_scraper.py
+          python steam_price_history.py
 
       - name: Configure Git
         run: |
@@ -38,5 +40,6 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git add ./data/*
-          git commit -m "Delete old files and add new scraped data"
+          git add ./data_price_history/*
+          git commit -m "add new scraped data"
           git push

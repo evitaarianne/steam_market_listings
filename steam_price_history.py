@@ -1,18 +1,18 @@
 import requests
+import json
 import datetime
 import os
-from bs4 import BeautifulSoup
+import time
 
-# List of URLs to scrape
 URLS = [
-    "https://steamcommunity.com/market/listings/3188910/Ren",
-    "https://steamcommunity.com/market/listings/3188910/Aoshi",
-    "https://steamcommunity.com/market/listings/3188910/Jeanne",
-    "https://steamcommunity.com/market/listings/3188910/Minnie",
-    "https://steamcommunity.com/market/listings/3188910/Celia",
-    "https://steamcommunity.com/market/listings/3188910/Shizuku",
-    "https://steamcommunity.com/market/listings/3188910/Noelle",
-    "https://steamcommunity.com/market/listings/3188910/Clara",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Ren",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Aoshi",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Jeanne",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Minnie",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Celia",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Shizuku",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Noelle",
+    "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Clara",
 ]
 
 HEADERS = {
@@ -28,8 +28,7 @@ COOKIES = {
     "steamCountry": "PH%7C4820b4d68695a659fae175d42b4852f1",
 }
 
-# Directory to save output files
-OUTPUT_DIR = "./data"
+OUTPUT_DIR = "./data_price_history"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def scrape_and_save():
@@ -37,16 +36,12 @@ def scrape_and_save():
         try:
             response = requests.get(url, headers=HEADERS, cookies=COOKIES)
             if response.status_code == 200:
-                soup = BeautifulSoup(response.text, "html.parser")
-                html_content = soup.prettify()
+                data = response.json()
                 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-                market_hash_name = url.split("/")[-1]  # Extract item name from URL
-                filename = f"{OUTPUT_DIR}/steam_market_{market_hash_name}_{timestamp}.html"
-                
-                # Save the HTML content to a file
-                with open(filename, "w", encoding="utf-8") as file:
-                    file.write(html_content)
-                
+                market_hash_name = url.split("=")[-1]  
+                filename = f"{OUTPUT_DIR}/steam_market_{market_hash_name}_{timestamp}.json"
+                with open(filename, "w") as file:
+                    json.dump(data, file, indent=4)
                 print(f"Data saved to {filename}")
             else:
                 print(f"Error {response.status_code}: Failed to fetch data from {url}")
