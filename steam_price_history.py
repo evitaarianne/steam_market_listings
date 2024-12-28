@@ -4,7 +4,14 @@ import datetime
 import os
 import time
 import csv
-import pandas as pd
+import psycopg2
+from psycopg2.extras import execute_values
+
+SUPABASE_DB_HOST = "aws-0-us-west-1.pooler.supabase.com"
+SUPABASE_DB_NAME = "postgres"
+SUPABASE_DB_USER = "postgres.usgsakbuekmtvgfcimfy"
+SUPABASE_DB_PASSWORD = "cec!mhv2rqv3nah.WRH"
+SUPABASE_DB_PORT = 6543
 
 URLS = [
     "https://steamcommunity.com/market/pricehistory?appid=3188910&market_hash_name=Ren",
@@ -30,83 +37,64 @@ COOKIES = {
     "steamCountry": "PH%7C4820b4d68695a659fae175d42b4852f1",
 }
 
-OUTPUT_FILE = "./data_price_history/price_history.csv"
-os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+def connect_to_db():
+    """Establish connection to Supabase Postgres database."""
+    return psycopg2.connect(
+        host=SUPABASE_DB_HOST,
+        database=SUPABASE_DB_NAME,
+        user=SUPABASE_DB_USER,
+        password=SUPABASE_DB_PASSWORD,
+        port=SUPABASE_DB_PORT
+    )
 
-def load_existing_data():
+def insert_data_to_db(data):
+    """Insert scraped data into Supabase database."""
+    insert_query = """
+    INSERT INTO price_history (timestamp, market_hash_name, date, price, volume)
+        VALUES %s
+        ON CONFLICT (market_hash_name, date, price, volume) DO NOTHING;
     """
-    Load existing rows from the CSV file into a set for deduplication.
-    """
-    existing_rows = set()
-    if os.path.exists(OUTPUT_FILE):
-        with open(OUTPUT_FILE, "r", encoding="utf-8") as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader, None)  # Skip header
-            for row in reader:
-                # Use tuple of relevant data as key
-                existing_rows.add(tuple(row))
-    return existing_rows
+    try:
+        connection = connect_to_db()
+        cursor = connection.cursor()
+        execute_values(cursor, insert_query, data)
+        connection.commit()
+        print("Data successfully inserted into the database.")
+    except Exception as e:
+        print(f"Error inserting data into the database: {e}")
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
 
-def scrape_and_save():
-    print(f"Writing to file: {os.path.abspath(OUTPUT_FILE)}")
-    file_exists = os.path.isfile(OUTPUT_FILE)
-    
-    with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile)
-        if not file_exists:
-            writer.writerow(["timestamp", "market_hash_name", "date", "price", "volume"])
+def scrape_and_save_to_db():
+    all_data = []
+    for url in URLS:
+        try:
+            print(f"Fetching data from {url}")
+            response = requests.get(url, headers=HEADERS, cookies=COOKIES)
+            print(f"Response Status: {response.status_code}")
 
-        for url in URLS:
-            try:
-                print(f"Fetching data from {url}")
-                response = requests.get(url, headers=HEADERS, cookies=COOKIES)
-                print(f"Response Status: {response.status_code}")
+            if response.status_code == 200:
+                data = response.json()
+                market_hash_name = url.split("=")[-1]
+                prices = data.get("prices", [])
 
-                if response.status_code == 200:
-                    data = response.json()
-                    market_hash_name = url.split("=")[-1]
-                    prices = data.get("prices", [])
+                if not prices:
+                    print(f"No prices data for {market_hash_name}")
+                    continue
 
-                    if not prices:
-                        print(f"No prices data for {market_hash_name}")
-                        continue
+                timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                for entry in prices:
+                    all_data.append((timestamp, market_hash_name, entry[0], entry[1], entry[2]))
+                print(f"Data for {market_hash_name} fetched successfully.")
+            else:
+                print(f"Error {response.status_code}: Failed to fetch data from {url}")
+        except Exception as e:
+            print(f"An error occurred while fetching data from {url}: {e}")
 
-                    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    for entry in prices:
-                        writer.writerow([timestamp, market_hash_name, entry[0], entry[1], entry[2]])
-                    print(f"Data for {market_hash_name} appended to {OUTPUT_FILE}")
-                else:
-                    print(f"Error {response.status_code}: Failed to fetch data from {url}")
-            except Exception as e:
-                print(f"An error occurred while fetching data from {url}: {e}")
-
-        csvfile.flush()
-
-def remove_duplicates():
-    print(f"Removing duplicates from {OUTPUT_FILE}")
-    if os.path.exists(OUTPUT_FILE):
-        df = pd.read_csv(OUTPUT_FILE)
-        
-        if df.empty:
-            print(f"{OUTPUT_FILE} is empty. Skipping deduplication.")
-            return
-        
-        print("CSV Columns:", df.columns)
-        
-        required_columns = {"timestamp", "market_hash_name", "date", "price", "volume"}
-        if not required_columns.issubset(df.columns):
-            print(f"Missing required columns: {required_columns - set(df.columns)}")
-            return
-
-        deduplicated_df = df.sort_values(by="timestamp").drop_duplicates(
-            subset=["market_hash_name", "date", "price", "volume"], keep="first"
-        )
-        deduplicated_df.to_csv(OUTPUT_FILE, index=False)
-        print(f"Duplicates removed. Cleaned data saved to {OUTPUT_FILE}")
-    else:
-        print(f"{OUTPUT_FILE} does not exist. Skipping deduplication.")
-
+    if all_data:
+        insert_data_to_db(all_data)
 
 if __name__ == "__main__":
-    scrape_and_save()
-    remove_duplicates()
+    scrape_and_save_to_db()
